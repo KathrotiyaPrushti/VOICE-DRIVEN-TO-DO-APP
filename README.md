@@ -1,53 +1,57 @@
 # Voice-Driven To-Do List App
 
-A Flutter-based voice-driven to-do list application that allows users to manage their tasks entirely through voice commands, with local storage support.
+A Flutter application that allows users to manage their tasks using voice commands. The app provides a hands-free experience for creating, updating, and managing to-do items.
 
 ## Features
 
-- Voice-driven task management
-- Local storage with Hive
-- Natural language understanding for commands
-- Audible confirmations and prompts
-- Clean, conversational UI
+- Voice input for creating and managing tasks
+- Live transcription of voice input
+- Offline voice capture capability
+- Local storage using Hive
+- Beautiful and intuitive UI
+- Task management (create, update, delete)
 
-## Setup Instructions
+## Getting Started
 
 ### Prerequisites
 
-- Flutter SDK (latest version)
+- Flutter SDK
+- Dart SDK
 - Android Studio / VS Code with Flutter extensions
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   flutter pub get
-   ```
-3. Initialize Hive:
-   ```bash
-   flutter pub run build_runner build
-   ```
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/voice-todo-app.git
+```
+
+2. Navigate to the project directory:
+```bash
+cd voice-todo-app
+```
+
+3. Install dependencies:
+```bash
+flutter pub get
+```
+
 4. Run the app:
-   ```bash
-   flutter run
-   ```
+```bash
+flutter run
+```
 
-## Voice Commands
+## Usage
 
-The app supports the following voice commands:
-
-- "Add [task description]" - Creates a new task
-- "Complete [task description]" - Marks a task as completed
-- "Delete [task description]" - Deletes a task
-
-## Local Storage
-
-The app uses Hive for local storage, ensuring your tasks are saved even when the app is closed. Tasks are stored locally on your device.
+1. Tap the microphone button to start voice input
+2. Speak your task clearly
+3. The app will transcribe your voice input in real-time
+4. Tap the submit button to save the task
+5. Manage your tasks using the provided UI controls
 
 ## Contributing
 
-Feel free to submit issues and enhancement requests.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
