@@ -5,6 +5,7 @@ import 'package:project_exam/services/voice_service.dart';
 import 'package:project_exam/widgets/task_list.dart';
 import 'package:project_exam/widgets/voice_button.dart';
 import 'package:project_exam/models/task.dart';
+import 'package:project_exam/widgets/voice_input_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -108,69 +109,94 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Voice-Driven To-Do'),
+        title: const Text('Voice To-Do'),
+        centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          // Main content
-          Column(
-            children: [
-              Expanded(
-                child: const TaskList(),
-              ),
-              if (!_isInitialized)
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Initializing voice service...',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              // Leave out the bar here!
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Theme.of(context).colorScheme.background,
+              Theme.of(context).colorScheme.surface,
             ],
           ),
-          // Bottom bar with text field and submit button
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 24), // leave space for FAB
-              child: Material(
-                elevation: 8,
-                borderRadius: BorderRadius.circular(12),
-                child: Row(
-                  children: [
-                    Expanded(
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Consumer<TaskProvider>(
+                builder: (context, taskProvider, child) {
+                  return TaskList(
+                    tasks: taskProvider.tasks,
+                    onTaskComplete: taskProvider.toggleTaskCompletion,
+                    onTaskDelete: taskProvider.deleteTask,
+                  );
+                },
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.background,
+                        borderRadius: BorderRadius.circular(25),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                        ),
+                      ),
                       child: TextField(
                         controller: _textController,
-                        decoration: const InputDecoration(
-                          hintText: 'What are you working on?',
-                          border: OutlineInputBorder(),
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        decoration: InputDecoration(
+                          hintText: 'What are you doing?',
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    ElevatedButton(
-                      onPressed: _handleSubmit,
-                      child: const Text('Submit'),
+                  ),
+                  const SizedBox(width: 8.0),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(25),
                     ),
-                  ],
-                ),
+                    child: IconButton(
+                      onPressed: _handleSubmit,
+                      icon: Icon(
+                        Icons.send,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  const VoiceInputButton(),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      floatingActionButton: _isInitialized
-          ? Padding(
-              padding: const EdgeInsets.only(bottom: 80.0), // move FAB up above the bar
-              child: VoiceButton(
-                onResult: _handleVoiceCommand,
-                voiceService: _voiceService,
-              ),
-            )
-          : null,
     );
   }
 } 
