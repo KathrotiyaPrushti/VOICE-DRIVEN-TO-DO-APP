@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:project_exam/providers/task_provider.dart';
 import 'package:project_exam/services/voice_service.dart';
+import 'package:project_exam/services/auth_service.dart';
 import 'package:project_exam/widgets/task_list.dart';
 import 'package:project_exam/widgets/voice_button.dart';
 import 'package:project_exam/models/task.dart';
@@ -105,12 +106,25 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _logout() async {
+    await context.read<AuthService>().logout();
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, '/');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Voice To-Do'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: _logout,
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
