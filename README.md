@@ -78,7 +78,7 @@ flutter run
 
 | Login Screen| SignUp Screen | Home Screen | Task Creation |
 |-------------|---------------|-------------|---------------|
-| ![Login](assets/images/login.png) | ![SignUp](assets/images/signup.png) | ![Home](assets/images/home.png) | ![Create](assets/images/task.png) |
+| ![Login](assets/login.png) | ![SignUp](assets/signup.png) | ![Home](assets/home.png) | ![Create](assets/task.png) |
 
 ## 🤝 Contributing
 
